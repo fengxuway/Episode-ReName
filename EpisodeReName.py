@@ -692,7 +692,7 @@ if os.path.isdir(target_path):
             file_name, ext = get_file_name_ext(name)
 
             # 只处理特定后缀
-            if not ext.lower() in ['jpg', 'png', 'nfo', 'torrent']:
+            if not ext.lower() in ['jpg', 'png', 'nfo', 'torrent', 'bak']:
                 continue
 
             res = re.findall('^S(\d{1,4})E(\d{1,4}(\.5)?)', file_name.upper())
@@ -700,7 +700,8 @@ if os.path.isdir(target_path):
                 continue
             else:
                 logger.info(f'{file_path}')
-                os.remove(file_path)
+                # os.remove(file_path)
+                os.rename(file_path, file_path + '.bak')
 
     # 遍历文件夹
     for root, dirs, files in os.walk(target_path, topdown=False):

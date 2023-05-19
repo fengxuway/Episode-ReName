@@ -499,7 +499,7 @@ def get_season_and_ep(file_path):
         # 匹配顺序调整
         if not ep:
             # logger.info(f"{'找 EXX'}")
-            pat = '[Ee](\d{1,4}(\.5)?)'
+            pat = r'[Ee](\d{1,4}(\.5)?)'
             for y in res:
                 y = y.strip()
                 res_sub = re.search(pat, y.upper())
@@ -507,6 +507,15 @@ def get_season_and_ep(file_path):
                     ep = res_sub.group(1)
                     break
 
+        # 匹配 E001  E001.
+        if not ep:
+            pat = r'[. ][Ee](\d+)[. ]'
+            for y in res:
+                y = y.strip()
+                res_sub = re.search(pat, y.upper())
+                if res_sub:
+                    ep = res_sub.group(1)
+                    break
         def extract_ending_ep(s):
             logger.info(f"{'找末尾是数字的子字符串'}")
             s = s.strip()
